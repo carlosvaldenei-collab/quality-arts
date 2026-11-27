@@ -49,7 +49,7 @@ export function Navbar() {
           : 'bg-transparent',
       )}
     >
-      <nav aria-label="Principal" className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
+      <nav aria-label="Principal" className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-3 px-4 md:h-20 md:px-6">
         <a href="#inicio" className="flex shrink-0 items-center" aria-label={copy.brandAria}>
           <Image
             src="/images/logo-quality-arts.png"
@@ -57,7 +57,7 @@ export function Navbar() {
             width={1160}
             height={522}
             priority
-            className="h-10 w-auto md:h-11"
+            className="h-12 w-auto md:h-14"
           />
         </a>
 
