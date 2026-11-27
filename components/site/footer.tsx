@@ -1,6 +1,10 @@
+'use client'
+
 import Image from 'next/image'
 import { MapPin } from 'lucide-react'
 import { NAV_LINKS, PORTFOLIO, whatsappLink } from '@/lib/site-data'
+import { FOOTER_COPY } from '@/lib/footer-i18n'
+import { useLanguage } from './language-provider'
 import { WhatsAppIcon } from './whatsapp-icon'
 
 function Instagram({ className }: { className?: string }) {
@@ -38,42 +42,44 @@ const socials = [
 ]
 
 export function Footer() {
+  const { locale } = useLanguage()
+  const copy = FOOTER_COPY[locale]
+
   return (
     <footer className="border-t border-border bg-mist">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-2 md:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div>
           <Image
             src="/images/logo-quality-arts.png"
-            alt="Quality Arts Soluções Web"
+            alt={copy.logoAlt}
             width={1160}
             height={522}
             className="h-14 w-auto"
           />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted-foreground">
-            Sites institucionais, catálogos digitais, infraestrutura web e rastreamento inteligente com atendimento
-            próximo e individualizado.
+            {copy.description}
           </p>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-royal">
             <MapPin className="size-4 shrink-0 text-royal" aria-hidden="true" />
-            <span>Santa Rita do Sapucaí - MG</span>
+            <span>{copy.location}</span>
           </p>
         </div>
 
-        <nav aria-label="Navegação rápida">
-          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">Navegação</h2>
+        <nav aria-label={copy.navAria}>
+          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">{copy.navHeading}</h2>
           <ul className="mt-4 grid gap-2.5">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="text-sm text-muted-foreground transition hover:text-royal">
-                  {l.label}
+                  {copy.navLabelsByHref[l.href] ?? l.label}
                 </a>
               </li>
             ))}
           </ul>
         </nav>
 
-        <nav aria-label="Portfólio">
-          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">Portfólio</h2>
+        <nav aria-label={copy.portfolioAria}>
+          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">{copy.portfolioHeading}</h2>
           <ul className="mt-4 grid gap-2.5">
             {PORTFOLIO.map((p) => (
               <li key={p.url}>
@@ -92,7 +98,7 @@ export function Footer() {
         </nav>
 
         <div>
-          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">Conecte-se</h2>
+          <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">{copy.connectHeading}</h2>
           <ul className="mt-4 flex items-center gap-3">
             {socials.map((s) => (
               <li key={s.label}>
@@ -110,20 +116,20 @@ export function Footer() {
             ))}
           </ul>
           <a
-            href={whatsappLink('Olá, Quality Arts! Vim pelo site.')}
+            href={whatsappLink(copy.whatsappMessage)}
             target="_blank"
             suppressHydrationWarning
             rel="noopener noreferrer"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-[#1ebe5b]"
           >
             <WhatsAppIcon className="size-4 shrink-0" />
-            <span>Fale no WhatsApp</span>
+            <span>{copy.whatsappButton}</span>
           </a>
         </div>
       </div>
       <div className="border-t border-border">
         <p className="mx-auto max-w-7xl px-4 py-6 text-center text-xs text-muted-foreground md:px-6">
-          {`© ${new Date().getFullYear()} Quality Arts Soluções Web. Todos os direitos reservados.`}
+          {copy.rights(new Date().getFullYear())}
         </p>
       </div>
     </footer>
@@ -131,13 +137,16 @@ export function Footer() {
 }
 
 export function WhatsAppFloat() {
+  const { locale } = useLanguage()
+  const copy = FOOTER_COPY[locale]
+
   return (
     <a
-      href={whatsappLink('Olá, Quality Arts! Vim pelo site e gostaria de falar com vocês.')}
+      href={whatsappLink(copy.floatMessage)}
       target="_blank"
       suppressHydrationWarning
       rel="noopener noreferrer"
-      aria-label="Falar com a Quality Arts no WhatsApp"
+      aria-label={copy.floatAria}
       className="group fixed right-5 bottom-5 z-50 grid size-15 place-items-center rounded-full bg-[#25D366] text-slate-950 shadow-[0_15px_35px_-10px_rgb(37_211_102/0.8)] transition hover:scale-110"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" aria-hidden="true" />

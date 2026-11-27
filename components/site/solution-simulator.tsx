@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { CalendarCheck, Check, Clock, Globe, LayoutGrid, LineChart, Sparkles, Server } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SOLUTIONS, whatsappLink, type MeetingType, type SolutionId } from '@/lib/site-data'
+import { SIMULATOR_COPY, SOLUTIONS_EN } from '@/lib/simulator-i18n'
+import { useLanguage } from './language-provider'
 import { Reveal, SectionHeading } from './reveal'
 import { WhatsAppIcon } from './whatsapp-icon'
 
@@ -23,27 +25,40 @@ export function selectMeeting(type: MeetingType) {
 
 export function SolutionSimulator() {
   const [activeId, setActiveId] = useState<SolutionId>('site')
-  const active = SOLUTIONS.find((s) => s.id === activeId) ?? SOLUTIONS[0]
+  const { locale } = useLanguage()
+  const copy = SIMULATOR_COPY[locale]
+
+  const baseActive = SOLUTIONS.find((s) => s.id === activeId) ?? SOLUTIONS[0]
+  const active =
+    locale === 'en'
+      ? {
+          ...baseActive,
+          ...SOLUTIONS_EN[baseActive.id],
+        }
+      : baseActive
+
   const ActiveIcon = ICONS[active.id]
 
   return (
     <section id="simulador" className="relative bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <SectionHeading
-          eyebrow="Simulador Interativo"
+          eyebrow={copy.eyebrow}
           title={
             <>
-              Descubra a <span className="text-gradient-brand">Solução Ideal</span>
+              {copy.titlePrefix}
+              <span className="text-gradient-brand">{copy.titleHighlight}</span>
             </>
           }
-          description="Selecione o que sua empresa precisa hoje e veja na hora o que está incluso, os benefícios e o prazo médio."
+          description={copy.description}
         />
 
         <Reveal delay={100} className="mt-12 grid gap-6 lg:grid-cols-[minmax(0,22rem)_1fr]">
-          <div role="tablist" aria-label="Escolha uma solução" aria-orientation="vertical" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div role="tablist" aria-label={copy.tablistAria} aria-orientation="vertical" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             {SOLUTIONS.map((s) => {
               const Icon = ICONS[s.id]
               const selected = s.id === activeId
+              const tabLabel = locale === 'en' ? SOLUTIONS_EN[s.id].label : s.label
               return (
                 <button
                   key={s.id}
@@ -68,7 +83,7 @@ export function SolutionSimulator() {
                   >
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <span className="font-heading font-bold leading-snug">{s.label}</span>
+                  <span className="font-heading font-bold leading-snug">{tabLabel}</span>
                 </button>
               )
             })}
@@ -81,7 +96,7 @@ export function SolutionSimulator() {
             className="relative overflow-hidden rounded-3xl border border-border bg-mesh-light p-6 md:p-10"
           >
             <div
-              key={active.id}
+              key={`${active.id}-${locale}`}
               className="relative animate-in fade-in slide-in-from-bottom-3 duration-500"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
@@ -93,14 +108,14 @@ export function SolutionSimulator() {
                 </div>
                 <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 px-4 py-2 text-sm font-bold text-[#92400e]">
                   <Clock className="size-4" aria-hidden="true" />
-                  Prazo médio: {active.deadline}
+                  {copy.deadlinePrefix} {active.deadline}
                 </span>
               </div>
               <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-muted-foreground">{active.description}</p>
 
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 <div className="rounded-2xl bg-white p-5 shadow-sm">
-                  <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-electric">O que está incluso</h4>
+                  <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-electric">{copy.includesHeading}</h4>
                   <ul className="mt-4 grid gap-3">
                     {active.includes.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm text-ink">
@@ -113,7 +128,7 @@ export function SolutionSimulator() {
                   </ul>
                 </div>
                 <div className="rounded-2xl bg-brand-gradient p-5 text-white shadow-sm">
-                  <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-white/80">Benefícios para o negócio</h4>
+                  <h4 className="font-heading text-sm font-bold uppercase tracking-wider text-white/80">{copy.benefitsHeading}</h4>
                   <ul className="mt-4 grid gap-3">
                     {active.benefits.map((item) => (
                       <li key={item} className="flex items-start gap-3 text-sm">
@@ -132,19 +147,17 @@ export function SolutionSimulator() {
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-6 py-3.5 font-bold text-ink shadow-[0_14px_30px_-14px_rgb(245_158_11/0.9)] transition hover:-translate-y-0.5"
                 >
                   <CalendarCheck className="size-5" aria-hidden="true" />
-                  Agendar esta Solução no Calendário
+                  {copy.bookButton}
                 </button>
                 <a
-                  href={whatsappLink(
-                    `Olá, Quality Arts! Tenho interesse na solução "${active.title}" e gostaria de mais informações.`,
-                  )}
+                  href={whatsappLink(copy.whatsappMessage(active.title))}
                   target="_blank"
                   suppressHydrationWarning
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1ebe5b]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 font-bold text-slate-950 transition hover:-translate-y-0.5 hover:bg-[#1ebe5b]"
                 >
-                  <WhatsAppIcon className="size-5" />
-                  Falar no WhatsApp
+                  <WhatsAppIcon className="size-5 shrink-0" />
+                  {copy.whatsappButton}
                 </a>
               </div>
             </div>

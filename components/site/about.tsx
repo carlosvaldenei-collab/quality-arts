@@ -1,35 +1,44 @@
+'use client'
+
 import Image from 'next/image'
 import { HeartHandshake, Puzzle, UserRound } from 'lucide-react'
+import { ABOUT_COPY, type DifferentialCopy } from '@/lib/about-i18n'
+import { useLanguage } from './language-provider'
 import { Reveal } from './reveal'
 
-const differentials = [
+const DIFFERENTIAL_STYLES: Record<
+  DifferentialCopy['id'],
   {
+    icon: typeof UserRound
+    style: string
+    iconStyle: string
+    textStyle: string
+  }
+> = {
+  individual: {
     icon: UserRound,
-    title: 'Atendimento Individualizado',
-    text: 'Você fala direto com quem desenvolve. Conhecemos sua empresa a fundo para criar a solução certa.',
     style: 'bg-brand-gradient text-white',
     iconStyle: 'bg-white/20 text-white',
     textStyle: 'text-white/85',
   },
-  {
+  flexible: {
     icon: Puzzle,
-    title: 'Soluções Flexíveis Sob Medida',
-    text: 'Nada de pacotes engessados: cada projeto é desenhado conforme o momento e o orçamento do seu negócio.',
     style: 'bg-white text-ink border border-border',
     iconStyle: 'bg-gradient-to-br from-indigo-brand to-electric text-white',
     textStyle: 'text-muted-foreground',
   },
-  {
+  partnership: {
     icon: HeartHandshake,
-    title: 'Parceria e Suporte Contínuo',
-    text: 'Seguimos juntos depois da entrega, com suporte, monitoramento e evolução constante da sua presença web.',
     style: 'bg-gradient-to-br from-turquoise to-electric text-white',
     iconStyle: 'bg-white/20 text-white',
     textStyle: 'text-white/85',
   },
-]
+}
 
 export function About() {
+  const { locale } = useLanguage()
+  const copy = ABOUT_COPY[locale]
+
   return (
     <section id="sobre" className="relative overflow-hidden bg-mesh-light py-20 md:py-28">
       <Image
@@ -46,14 +55,14 @@ export function About() {
           <div className="relative rounded-[2rem] border border-white bg-white p-10 shadow-[0_40px_80px_-35px_rgb(0_74_143/0.5)]">
             <Image
               src="/images/logo-quality-arts-vertical.png"
-              alt="Logomarca vertical Quality Arts Soluções Web"
+              alt={copy.logoAlt}
               width={844}
               height={841}
               className="h-auto w-full"
             />
           </div>
           <div className="absolute -bottom-6 -left-4 rounded-2xl bg-gold-gradient px-5 py-3 font-heading font-extrabold text-ink shadow-xl animate-float">
-            Santa Rita do Sapucaí - MG
+            {copy.locationBadge}
           </div>
         </Reveal>
 
@@ -61,41 +70,39 @@ export function About() {
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full bg-electric/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-electric">
               <span className="size-1.5 rounded-full bg-turquoise" />
-              Nossa Essência
+              {copy.eyebrow}
             </span>
             <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight text-ink md:text-4xl lg:text-5xl">
-              Nosso Foco é Você e o <span className="text-gradient-brand">Seu Sucesso na Web.</span>
+              {copy.titlePrefix}
+              <span className="text-gradient-brand">{copy.titleHighlight}</span>
             </h2>
           </Reveal>
           <Reveal delay={100}>
             <div className="mt-6 space-y-4 text-pretty leading-relaxed text-muted-foreground">
-              <p>
-                Acreditamos que desenvolver relacionamentos pessoais com nossos clientes é crucial para criar uma solução
-                adequada através dos nossos serviços de comunicação. Orgulhamo-nos da nossa capacidade de oferecer a
-                atenção individual que merecem. Quanto mais conhecemos sobre você e sua empresa, melhor podemos ajudá-lo a
-                atingir seus objetivos.
-              </p>
-              <p>
-                Na Quality Arts nosso foco está em você: nossa equipe adora o que faz e prospera aprendendo mais sobre seus
-                negócios, atividades e necessidades na WEB para liderar sua empresa rumo ao sucesso sólido.
-              </p>
+              {copy.paragraphs.map((paragraph, idx) => (
+                <p key={idx}>{paragraph}</p>
+              ))}
             </div>
           </Reveal>
 
           <ul className="mt-10 grid gap-4 sm:grid-cols-3">
-            {differentials.map((d, i) => (
-              <Reveal as="li" key={d.title} delay={150 + i * 100}>
-                <div
-                  className={`h-full rounded-2xl p-5 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-xl ${d.style}`}
-                >
-                  <span className={`grid size-11 place-items-center rounded-xl ${d.iconStyle}`}>
-                    <d.icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 font-heading text-base font-bold leading-snug">{d.title}</h3>
-                  <p className={`mt-2 text-sm leading-relaxed ${d.textStyle}`}>{d.text}</p>
-                </div>
-              </Reveal>
-            ))}
+            {copy.differentials.map((d, i) => {
+              const visual = DIFFERENTIAL_STYLES[d.id]
+              const Icon = visual.icon
+              return (
+                <Reveal as="li" key={d.id} delay={150 + i * 100}>
+                  <div
+                    className={`h-full rounded-2xl p-5 shadow-sm transition duration-300 hover:-translate-y-1.5 hover:shadow-xl ${visual.style}`}
+                  >
+                    <span className={`grid size-11 place-items-center rounded-xl ${visual.iconStyle}`}>
+                      <Icon className="size-5" aria-hidden="true" />
+                    </span>
+                    <h3 className="mt-4 font-heading text-base font-bold leading-snug">{d.title}</h3>
+                    <p className={`mt-2 text-sm leading-relaxed ${visual.textStyle}`}>{d.text}</p>
+                  </div>
+                </Reveal>
+              )
+            })}
           </ul>
         </div>
       </div>

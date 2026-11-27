@@ -5,26 +5,34 @@ import Image from 'next/image'
 import { CalendarCheck, Minus, Plus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FAQ_ITEMS, whatsappLink } from '@/lib/site-data'
+import { FAQ_COPY, FAQ_ITEMS_EN } from '@/lib/faq-i18n'
+import { useLanguage } from './language-provider'
 import { Reveal, SectionHeading } from './reveal'
 import { WhatsAppIcon } from './whatsapp-icon'
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0)
+  const { locale } = useLanguage()
+  const copy = FAQ_COPY[locale]
+
+  const items = FAQ_ITEMS.map((item, idx) =>
+    locale === 'en' && FAQ_ITEMS_EN[idx] ? FAQ_ITEMS_EN[idx] : item,
+  )
 
   return (
     <section id="faq" className="bg-mesh-light py-20 md:py-28">
       <div className="mx-auto max-w-3xl px-4 md:px-6">
         <SectionHeading
-          eyebrow="FAQ"
-          title="Perguntas frequentes"
-          description="Tire suas dúvidas sobre prazos, domínios, hospedagem, SEO e suporte."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
         />
         <Reveal delay={100} className="mt-12 grid gap-3">
-          {FAQ_ITEMS.map((item, i) => {
+          {items.map((item, i) => {
             const isOpen = open === i
             return (
               <div
-                key={item.q}
+                key={`${item.q}-${i}`}
                 className={cn(
                   'rounded-2xl border bg-white transition-all duration-300',
                   isOpen ? 'border-electric/40 shadow-[0_20px_40px_-25px_rgb(0_74_143/0.5)]' : 'border-border',
@@ -73,6 +81,9 @@ export function Faq() {
 }
 
 export function FinalCta() {
+  const { locale } = useLanguage()
+  const cta = FAQ_COPY[locale].finalCta
+
   return (
     <section className="px-4 py-20 md:px-6">
       <Reveal className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-brand-gradient px-6 py-16 text-center text-white md:px-16">
@@ -88,11 +99,10 @@ export function FinalCta() {
         <div className="pointer-events-none absolute top-8 right-12 size-5 rotate-12 rounded-md bg-gold animate-float" />
         <div className="relative">
           <h2 className="mx-auto max-w-3xl text-balance text-3xl font-extrabold tracking-tight md:text-5xl">
-            Pronto para levar sua empresa a outro nível na web?
+            {cta.title}
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg text-white/85">
-            Agende uma conversa gratuita de 30 minutos e descubra como podemos transformar sua presença digital em
-            resultados reais.
+            {cta.description}
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <a
@@ -100,17 +110,17 @@ export function FinalCta() {
               className="inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 font-bold text-ink shadow-xl transition hover:-translate-y-0.5"
             >
               <CalendarCheck className="size-5" aria-hidden="true" />
-              Agendar Diagnóstico Gratuito
+              {cta.primaryButton}
             </a>
             <a
-              href={whatsappLink('Olá, Quality Arts! Quero levar minha empresa a outro nível na web.')}
+              href={whatsappLink(cta.whatsappMessage)}
               target="_blank"
               suppressHydrationWarning
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white/40 bg-white/10 px-7 py-4 font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/20"
             >
-              <WhatsAppIcon className="size-5" />
-              Chamar no WhatsApp
+              <WhatsAppIcon className="size-5 shrink-0" />
+              {cta.secondaryButton}
             </a>
           </div>
         </div>

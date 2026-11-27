@@ -1,9 +1,16 @@
+'use client'
+
 import { ArrowRight, BarChart3, CalendarCheck, Gauge, Lock, Rocket, Search, TrendingUp } from 'lucide-react'
+import { HERO_COPY } from '@/lib/hero-i18n'
+import { useLanguage } from './language-provider'
 import { Counter, Reveal } from './reveal'
 
 const bars = [38, 52, 46, 64, 58, 76, 70, 88, 82, 96]
 
 export function Hero() {
+  const { locale } = useLanguage()
+  const copy = HERO_COPY[locale]
+
   return (
     <section id="inicio" className="relative overflow-hidden bg-mesh-light pt-28 pb-20 md:pt-36 md:pb-28">
       <div className="pointer-events-none absolute inset-0 bg-grid-faint [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
@@ -21,19 +28,18 @@ export function Hero() {
                 <span className="relative inline-flex size-2 rounded-full bg-turquoise" />
               </span>
               <Rocket className="size-4 text-gold" aria-hidden="true" />
-              Agência Digital em Santa Rita do Sapucaí - MG
+              {copy.badge}
             </span>
           </Reveal>
           <Reveal delay={100}>
             <h1 className="mt-6 text-balance text-4xl font-extrabold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Transformamos a presença digital da sua empresa em{' '}
-              <span className="text-gradient-brand">resultados sólidos e mensuráveis.</span>
+              {copy.titlePrefix}
+              <span className="text-gradient-brand">{copy.titleHighlight}</span>
             </h1>
           </Reveal>
           <Reveal delay={200}>
             <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
-              Criação de sites institucionais de alta performance, catálogos digitais interativos, gestão completa de
-              infraestrutura web e rastreamento inteligente com atendimento próximo e individualizado.
+              {copy.subtitle}
             </p>
           </Reveal>
           <Reveal delay={300} className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -42,33 +48,33 @@ export function Hero() {
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold-gradient px-7 py-4 font-bold text-ink shadow-[0_18px_35px_-15px_rgb(245_158_11/0.9)] transition hover:-translate-y-0.5"
             >
               <CalendarCheck className="size-5" aria-hidden="true" />
-              Agendar Reunião Online
+              {copy.primaryCta}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </a>
             <a
               href="#portfolio"
               className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-royal/15 bg-white/80 px-7 py-4 font-bold text-royal backdrop-blur transition hover:-translate-y-0.5 hover:border-electric hover:text-electric"
             >
-              Explorar Portfólio
+              {copy.secondaryCta}
             </a>
           </Reveal>
           <Reveal delay={400}>
             <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6">
               <div>
-                <dt className="text-sm text-muted-foreground">Performance</dt>
+                <dt className="text-sm text-muted-foreground">{copy.metrics.performance}</dt>
                 <dd className="font-heading text-3xl font-extrabold text-royal">
                   <Counter to={99} />
                   <span className="text-lg text-muted-foreground">/100</span>
                 </dd>
               </div>
               <div>
-                <dt className="text-sm text-muted-foreground">Clientes no ar</dt>
+                <dt className="text-sm text-muted-foreground">{copy.metrics.liveClients}</dt>
                 <dd className="font-heading text-3xl font-extrabold text-electric">
                   <Counter to={10} suffix="+" />
                 </dd>
               </div>
               <div>
-                <dt className="text-sm text-muted-foreground">Responsivo</dt>
+                <dt className="text-sm text-muted-foreground">{copy.metrics.responsive}</dt>
                 <dd className="font-heading text-3xl font-extrabold text-indigo-brand">
                   <Counter to={100} suffix="%" />
                 </dd>
@@ -78,16 +84,16 @@ export function Hero() {
         </div>
 
         <Reveal delay={200} className="relative mx-auto w-full max-w-xl">
-          <HeroDashboard />
+          <HeroDashboard copy={copy.dashboard} />
         </Reveal>
       </div>
     </section>
   )
 }
 
-function HeroDashboard() {
+function HeroDashboard({ copy }: { copy: (typeof HERO_COPY)['pt']['dashboard'] }) {
   return (
-    <div className="relative" aria-label="Painel ilustrativo de métricas de performance" role="img">
+    <div className="relative" aria-label={copy.ariaLabel} role="img">
       <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-electric/30 via-turquoise/20 to-indigo-brand/30 blur-2xl" />
       <div className="relative overflow-hidden rounded-3xl border border-white/80 bg-white/90 shadow-[0_40px_80px_-30px_rgb(0_74_143/0.45)] backdrop-blur">
         <div className="flex items-center gap-2 border-b border-border/70 bg-mist/80 px-4 py-3">
@@ -96,14 +102,14 @@ function HeroDashboard() {
           <span className="size-3 rounded-full bg-[#28c840]" />
           <div className="ml-3 flex flex-1 items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs text-muted-foreground">
             <Lock className="size-3 text-emerald-600" aria-hidden="true" />
-            https://suaempresa.com.br
+            {copy.domainPreview}
           </div>
         </div>
 
         <div className="grid gap-4 p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-muted-foreground">Visitas este mês</p>
+              <p className="text-xs font-medium text-muted-foreground">{copy.visitsLabel}</p>
               <p className="font-heading text-2xl font-extrabold text-ink">
                 <Counter to={12480} />
               </p>
@@ -123,8 +129,8 @@ function HeroDashboard() {
             ))}
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <MetricPill icon={<Search className="size-4" />} label="SEO Otimizado" tone="bg-electric/10 text-electric" />
-            <MetricPill icon={<BarChart3 className="size-4" />} label="GA4 + Tag Manager" tone="bg-indigo-brand/10 text-indigo-brand" />
+            <MetricPill icon={<Search className="size-4" />} label={copy.seoPill} tone="bg-electric/10 text-electric" />
+            <MetricPill icon={<BarChart3 className="size-4" />} label={copy.analyticsPill} tone="bg-indigo-brand/10 text-indigo-brand" />
           </div>
         </div>
       </div>
@@ -136,14 +142,14 @@ function HeroDashboard() {
           </div>
         </div>
         <div>
-          <p className="text-xs text-muted-foreground">Velocidade</p>
+          <p className="text-xs text-muted-foreground">{copy.speedLabel}</p>
           <p className="font-heading text-lg font-extrabold text-ink">99/100</p>
         </div>
       </div>
 
       <div className="absolute top-1/3 -right-3 flex items-center gap-2 rounded-2xl bg-brand-gradient px-4 py-3 text-white shadow-xl animate-float-slow sm:-right-8">
         <Lock className="size-4" aria-hidden="true" />
-        <span className="text-sm font-bold">SSL Ativo</span>
+        <span className="text-sm font-bold">{copy.sslBadge}</span>
       </div>
 
       <div className="absolute -bottom-6 left-6 flex items-center gap-3 rounded-2xl border border-white bg-white/95 p-3 pr-5 shadow-xl animate-float sm:left-10">
@@ -151,7 +157,7 @@ function HeroDashboard() {
           <TrendingUp className="size-5" aria-hidden="true" />
         </div>
         <div>
-          <p className="text-xs text-muted-foreground">Conversões Rastreadas</p>
+          <p className="text-xs text-muted-foreground">{copy.conversionsLabel}</p>
           <p className="font-heading text-lg font-extrabold text-ink">
             <Counter to={248} />
           </p>

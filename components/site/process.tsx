@@ -4,21 +4,31 @@ import { useState } from 'react'
 import { Code2, PenTool, Rocket, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PROCESS_STEPS } from '@/lib/site-data'
+import { PROCESS_COPY, PROCESS_STEPS_EN } from '@/lib/process-i18n'
+import { useLanguage } from './language-provider'
 import { Reveal, SectionHeading } from './reveal'
 
 const ICONS = [Search, PenTool, Code2, Rocket]
 
 export function Process() {
   const [active, setActive] = useState(0)
-  const progress = (active / (PROCESS_STEPS.length - 1)) * 100
+  const { locale } = useLanguage()
+  const copy = PROCESS_COPY[locale]
+
+  const steps = PROCESS_STEPS.map((step, idx) =>
+    locale === 'en' && PROCESS_STEPS_EN[idx] ? PROCESS_STEPS_EN[idx] : step,
+  )
+
+  const progress = steps.length > 1 ? (active / (steps.length - 1)) * 100 : 0
+  const currentStep = steps[active] ?? steps[0]
 
   return (
     <section id="como-trabalhamos" className="relative overflow-hidden bg-mesh-light py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <SectionHeading
-          eyebrow="Como Trabalhamos"
-          title="Um processo claro, do briefing ao site no ar"
-          description="Clique em cada etapa para ver o que acontece em cada fase do seu projeto."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
         />
 
         <Reveal delay={100} className="mt-14">
@@ -30,12 +40,12 @@ export function Process() {
               />
             </div>
             <ol className="relative grid gap-4 md:grid-cols-4">
-              {PROCESS_STEPS.map((step, i) => {
-                const Icon = ICONS[i]
+              {steps.map((step, i) => {
+                const Icon = ICONS[i % ICONS.length]
                 const isActive = i === active
                 const done = i < active
                 return (
-                  <li key={step.title}>
+                  <li key={`${step.title}-${i}`}>
                     <button
                       type="button"
                       onClick={() => setActive(i)}
@@ -73,13 +83,15 @@ export function Process() {
           </div>
 
           <div
-            key={active}
+            key={`${active}-${locale}`}
             className="mt-10 animate-in fade-in slide-in-from-bottom-2 rounded-3xl border border-white bg-white p-6 shadow-[0_30px_60px_-35px_rgb(0_74_143/0.5)] duration-500 md:p-8"
             aria-live="polite"
           >
-            <p className="text-sm font-bold uppercase tracking-wider text-electric">Etapa {active + 1} de 4</p>
-            <h3 className="mt-2 text-2xl font-extrabold text-ink">{PROCESS_STEPS[active].title}</h3>
-            <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{PROCESS_STEPS[active].description}</p>
+            <p className="text-sm font-bold uppercase tracking-wider text-electric">
+              {copy.stepIndicator(active + 1, steps.length)}
+            </p>
+            <h3 className="mt-2 text-2xl font-extrabold text-ink">{currentStep.title}</h3>
+            <p className="mt-3 max-w-3xl leading-relaxed text-muted-foreground">{currentStep.description}</p>
             <div className="mt-6 flex gap-3">
               <button
                 type="button"
@@ -87,15 +99,15 @@ export function Process() {
                 disabled={active === 0}
                 className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-royal transition hover:bg-mist disabled:opacity-40"
               >
-                Anterior
+                {copy.previousButton}
               </button>
               <button
                 type="button"
-                onClick={() => setActive((v) => Math.min(PROCESS_STEPS.length - 1, v + 1))}
-                disabled={active === PROCESS_STEPS.length - 1}
+                onClick={() => setActive((v) => Math.min(steps.length - 1, v + 1))}
+                disabled={active === steps.length - 1}
                 className="rounded-full bg-royal px-5 py-2 text-sm font-semibold text-white transition hover:bg-electric disabled:opacity-40"
               >
-                Próxima etapa
+                {copy.nextButton}
               </button>
             </div>
           </div>
