@@ -65,11 +65,16 @@ const TERM_EN: Record<string, string> = {
   'comercio & produtos': 'Commerce & Products',
 
   // Segmentos
+  contabilidade: 'Accounting',
+  contábil: 'Accounting',
+  contabil: 'Accounting',
+  consultoria: 'Consulting',
+  'consultoria estratégica': 'Strategic Consulting',
+  'consultoria estrategica': 'Strategic Consulting',
   indústria: 'Industry',
   industria: 'Industry',
   serviços: 'Services',
   servicos: 'Services',
-  consultoria: 'Consulting',
   seguros: 'Insurance',
   'corretora de seguros': 'Insurance Brokerage',
   advocacia: 'Law Firm',
@@ -106,6 +111,30 @@ export function translateTerm(term: string, locale: Locale): string {
 
 // Traduções por URL, domínio ou nome do projeto para inglês
 const ITEMS_BY_KEY_EN: Record<string, PortfolioItemEn> = {
+  'valoraconecta.com.br': {
+    category: 'Services & Consulting',
+    segment: 'Accounting',
+    description:
+      'Business and accounting solutions website connecting financial clarity, advisory services, and direct client contact.',
+  },
+  'valora conecta': {
+    category: 'Services & Consulting',
+    segment: 'Accounting',
+    description:
+      'Business and accounting solutions website connecting financial clarity, advisory services, and direct client contact.',
+  },
+  'bluestarconsulting.com.br': {
+    category: 'Services & Consulting',
+    segment: 'Consulting',
+    description:
+      'Strategic consulting website highlighting tailored advisory solutions, procurement/logistics expertise, and direct contact.',
+  },
+  'blue star consulting': {
+    category: 'Services & Consulting',
+    segment: 'Consulting',
+    description:
+      'Strategic consulting website highlighting tailored advisory solutions, procurement/logistics expertise, and direct contact.',
+  },
   'alcasrs.com.br': {
     category: 'Corporate & Industry',
     segment: 'Industry',
