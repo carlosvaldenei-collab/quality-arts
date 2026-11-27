@@ -1,9 +1,9 @@
 import type { Locale } from '@/components/site/language-provider'
 
 export interface PortfolioItemEn {
-  category: string
-  segment: string
-  description: string
+  category?: string
+  segment?: string
+  description?: string
 }
 
 export const PORTFOLIO_COPY: Record<
@@ -44,64 +44,146 @@ export const PORTFOLIO_COPY: Record<
   },
 }
 
-const CATEGORY_EN: Record<string, string> = {
-  Todos: 'All',
-  'Site Institucional': 'Corporate Website',
-  'Sites Institucionais': 'Corporate Websites',
-  'Catálogo Digital': 'Digital Catalog',
-  'Catálogos Digitais': 'Digital Catalogs',
-  'Landing Page': 'Landing Page',
-  Portal: 'Portal',
+const TERM_EN: Record<string, string> = {
+  // Categorias e filtros
+  todos: 'All',
+  'site institucional': 'Corporate Website',
+  'sites institucionais': 'Corporate Websites',
+  'catálogo digital': 'Digital Catalog',
+  'catalogo digital': 'Digital Catalog',
+  'catálogos digitais': 'Digital Catalogs',
+  'catalogos digitais': 'Digital Catalogs',
+  'landing page': 'Landing Page',
+  portal: 'Portal',
+  'corporativo & indústria': 'Corporate & Industry',
+  'corporativo & industria': 'Corporate & Industry',
+  'serviços & consultoria': 'Services & Consulting',
+  'servicos & consultoria': 'Services & Consulting',
+  'saúde & bem-estar': 'Health & Wellness',
+  'saude & bem-estar': 'Health & Wellness',
+  'comércio & produtos': 'Commerce & Products',
+  'comercio & produtos': 'Commerce & Products',
+
+  // Segmentos
+  indústria: 'Industry',
+  industria: 'Industry',
+  serviços: 'Services',
+  servicos: 'Services',
+  consultoria: 'Consulting',
+  seguros: 'Insurance',
+  'corretora de seguros': 'Insurance Brokerage',
+  advocacia: 'Law Firm',
+  jurídico: 'Legal',
+  juridico: 'Legal',
+  psicologia: 'Psychology',
+  saúde: 'Health',
+  saude: 'Health',
+  'bem-estar': 'Wellness',
+  imobiliária: 'Real Estate',
+  imobiliaria: 'Real Estate',
+  vestuário: 'Apparel',
+  vestuario: 'Apparel',
+  confecção: 'Apparel Manufacturing',
+  confeccao: 'Apparel Manufacturing',
+  varejo: 'Retail',
+  comércio: 'Commerce',
+  comercio: 'Commerce',
 }
 
-export function translateCategory(category: string, locale: Locale): string {
-  if (locale === 'pt') return category
-  return CATEGORY_EN[category] ?? category
+function normalizeKey(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
 }
 
-// Mapeia a URL de cada projeto em PORTFOLIO para sua tradução em inglês.
-// Caso adicione um novo projeto em site-data.ts, basta incluir a URL dele aqui.
-export const PORTFOLIO_ITEMS_EN: Record<string, PortfolioItemEn> = {
-  'https://www.amocorretora.com': {
-    category: 'Corporate Website',
-    segment: 'Insurance Brokerage',
+export function translateTerm(term: string, locale: Locale): string {
+  if (locale === 'pt') return term
+  const normalized = normalizeKey(term)
+  return TERM_EN[normalized] ?? term
+}
+
+// Traduções por URL, domínio ou nome do projeto para inglês
+const ITEMS_BY_KEY_EN: Record<string, PortfolioItemEn> = {
+  'alcasrs.com.br': {
+    category: 'Corporate & Industry',
+    segment: 'Industry',
     description:
-      'Institutional presence designed to communicate trust, insurance lines, and direct contact channels.',
+      'Institutional presence structured with clear navigation, publications, and direct communication channels.',
   },
-  'https://www.mazevedoadv.com.br': {
-    category: 'Corporate Website',
-    segment: 'Law Firm',
+  alca: {
+    category: 'Corporate & Industry',
+    segment: 'Industry',
+    description:
+      'Institutional presence structured with clear navigation, publications, and direct communication channels.',
+  },
+  'grupoalpha.srv.br': {
+    category: 'Services & Consulting',
+    segment: 'Services',
+    description:
+      'Corporate website highlighting advisory and accounting/HR services, credibility, and direct client contact.',
+  },
+  'grupo alpha': {
+    category: 'Services & Consulting',
+    segment: 'Services',
+    description:
+      'Corporate website highlighting advisory and accounting/HR services, credibility, and direct client contact.',
+  },
+  'amocorretora.com': {
+    category: 'Services & Consulting',
+    segment: 'Insurance',
+    description:
+      'Website tailored to present personal and business insurance lines with fast, direct quote channels.',
+  },
+  'amo corretora': {
+    category: 'Services & Consulting',
+    segment: 'Insurance',
+    description:
+      'Website tailored to present personal and business insurance lines with fast, direct quote channels.',
+  },
+  'mazevedoadv.com.br': {
+    category: 'Services & Consulting',
+    segment: 'Legal',
     description:
       'Clean, authoritative website presenting practice areas, legal expertise, and client consultation channels.',
   },
-  'https://www.giovanagomespsi.com.br': {
-    category: 'Corporate Website',
-    segment: 'Psychology & Care',
+  'giovanagomespsi.com.br': {
+    category: 'Health & Wellness',
+    segment: 'Psychology',
     description:
       'Welcoming, accessible web presence focused on clarity, credibility, and appointment scheduling.',
   },
-  'https://www.grupoalpha.srv.br': {
-    category: 'Corporate Website',
-    segment: 'Corporate & Advisory',
-    description:
-      'Structured corporate website highlighting service divisions, operational credibility, and direct inquiries.',
-  },
-  'https://www.zaninimov.com.br': {
-    category: 'Digital Catalog',
+  'zaninimov.com.br': {
+    category: 'Commerce & Products',
     segment: 'Real Estate',
     description:
       'Property showcase structured for clear presentation, mobile browsing, and fast lead generation.',
   },
-  'https://www.reimarkcamisetas.com.br': {
-    category: 'Digital Catalog',
-    segment: 'Apparel & Manufacturing',
+  'reimarkcamisetas.com.br': {
+    category: 'Commerce & Products',
+    segment: 'Apparel',
     description:
       'Digital product catalog tailored to present collections, specs, and direct sales inquiries.',
   },
-  'https://www.alcasrs.com.br': {
-    category: 'Corporate Website',
-    segment: 'Regional Business',
-    description:
-      'Fast, responsive website built to strengthen local visibility and streamline customer contact.',
-  },
+}
+
+export function getPortfolioItemEn(params: {
+  url: string
+  domain: string
+  name: string
+}): PortfolioItemEn | undefined {
+  const candidates = [
+    params.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
+    params.domain.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
+    params.name,
+  ]
+
+  for (const raw of candidates) {
+    const clean = normalizeKey(raw)
+    if (ITEMS_BY_KEY_EN[clean]) {
+      return ITEMS_BY_KEY_EN[clean]
+    }
+  }
+  return undefined
 }

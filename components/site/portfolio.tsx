@@ -5,9 +5,9 @@ import Image from 'next/image'
 import { ArrowUpRight, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PORTFOLIO, PORTFOLIO_CATEGORIES, type PortfolioItem } from '@/lib/site-data'
-import { PORTFOLIO_COPY, PORTFOLIO_ITEMS_EN, translateCategory } from '@/lib/portfolio-i18n'
+import { PORTFOLIO_COPY, getPortfolioItemEn, translateTerm } from '@/lib/portfolio-i18n'
 import { useLanguage, type Locale } from './language-provider'
-import { SectionHeading } from './reveal'
+import { Reveal, SectionHeading } from './reveal'
 
 export function Portfolio() {
   const [filter, setFilter] = useState<(typeof PORTFOLIO_CATEGORIES)[number]>('Todos')
@@ -30,37 +30,39 @@ export function Portfolio() {
           description={copy.description}
         />
 
-        <div role="group" aria-label={copy.filterGroupAria} className="mt-10 flex flex-wrap justify-center gap-2">
-          {PORTFOLIO_CATEGORIES.map((c) => {
-            const count = c === 'Todos' ? PORTFOLIO.length : PORTFOLIO.filter((p) => p.category === c).length
-            const active = c === filter
-            const label = c === 'Todos' ? copy.allLabel : translateCategory(c, locale)
-            return (
-              <button
-                key={c}
-                type="button"
-                aria-pressed={active}
-                onClick={() => setFilter(c)}
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all',
-                  active
-                    ? 'bg-brand-gradient text-white shadow-[0_10px_25px_-12px_rgb(0_74_143/0.9)]'
-                    : 'bg-mist text-royal hover:bg-electric/10',
-                )}
-              >
-                {label}
-                <span
+        <Reveal delay={100}>
+          <div role="group" aria-label={copy.filterGroupAria} className="mt-10 flex flex-wrap justify-center gap-2">
+            {PORTFOLIO_CATEGORIES.map((c) => {
+              const count = c === 'Todos' ? PORTFOLIO.length : PORTFOLIO.filter((p) => p.category === c).length
+              const active = c === filter
+              const label = c === 'Todos' ? copy.allLabel : translateTerm(c, locale)
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => setFilter(c)}
                   className={cn(
-                    'grid min-w-5 place-items-center rounded-full px-1.5 text-xs',
-                    active ? 'bg-white/25' : 'bg-white text-royal',
+                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all',
+                    active
+                      ? 'bg-brand-gradient text-white shadow-[0_10px_25px_-12px_rgb(0_74_143/0.9)]'
+                      : 'bg-mist text-royal hover:bg-electric/10',
                   )}
                 >
-                  {count}
-                </span>
-              </button>
-            )
-          })}
-        </div>
+                  {label}
+                  <span
+                    className={cn(
+                      'grid min-w-5 place-items-center rounded-full px-1.5 text-xs',
+                      active ? 'bg-white/25' : 'bg-white text-royal',
+                    )}
+                  >
+                    {count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </Reveal>
 
         <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite">
           {items.map((item) => (
@@ -76,11 +78,20 @@ export function Portfolio() {
 
 function PortfolioCard({ item, locale }: { item: PortfolioItem; locale: Locale }) {
   const copy = PORTFOLIO_COPY[locale]
-  const enOverride = locale === 'en' ? PORTFOLIO_ITEMS_EN[item.url] : undefined
+  const enItem = locale === 'en' ? getPortfolioItemEn(item) : undefined
 
-  const categoryText = enOverride?.category ?? translateCategory(item.category, locale)
-  const segmentText = enOverride?.segment ?? item.segment
-  const descriptionText = enOverride?.description ?? item.description
+  const categoryText =
+    locale === 'en'
+      ? (enItem?.category ?? translateTerm(item.category, locale))
+      : item.category
+  const segmentText =
+    locale === 'en'
+      ? (enItem?.segment ?? translateTerm(item.segment, locale))
+      : item.segment
+  const descriptionText =
+    locale === 'en'
+      ? (enItem?.description ?? item.description)
+      : item.description
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white transition duration-300 hover:-translate-y-1.5 hover:border-electric/40 hover:shadow-[0_30px_60px_-30px_rgb(0_74_143/0.55)]">
