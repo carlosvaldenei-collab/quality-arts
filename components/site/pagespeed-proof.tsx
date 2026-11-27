@@ -31,7 +31,7 @@ export function PageSpeedProof() {
             </p>
           </div>
           <Link
-            href="https://pagespeed.web.dev/analysis/https-www-qualityarts-com-br/zqr9kl4yh1ams45wz6g5ek?form_factor=desktop"
+            href="https://pagespeed.web.dev/analysis/https-www-qualityarts-com-br/1dgx8fgn55ud2mgap5v8g8?form_factor=desktop"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-800 shadow ring-1 ring-black/5 hover:bg-slate-100 transition-colors"
