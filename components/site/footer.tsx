@@ -54,8 +54,8 @@ export function Footer() {
             próximo e individualizado.
           </p>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-royal">
-            <MapPin className="size-4 text-royal" aria-hidden="true" />
-            Santa Rita do Sapucaí - MG
+            <MapPin className="size-4 shrink-0 text-royal" aria-hidden="true" />
+            <span>Santa Rita do Sapucaí - MG</span>
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export function Footer() {
 
         <div>
           <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-ink">Conecte-se</h2>
-          <ul className="mt-4 flex gap-3">
+          <ul className="mt-4 flex items-center gap-3">
             {socials.map((s) => (
               <li key={s.label}>
                 <a
@@ -114,10 +114,10 @@ export function Footer() {
             target="_blank"
             suppressHydrationWarning
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-[#1ebe5b]"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-[#1ebe5b]"
           >
-            <WhatsAppIcon className="size-4" />
-            Fale no WhatsApp
+            <WhatsAppIcon className="size-4 shrink-0" />
+            <span>Fale no WhatsApp</span>
           </a>
         </div>
       </div>
@@ -141,7 +141,7 @@ export function WhatsAppFloat() {
       className="group fixed right-5 bottom-5 z-50 grid size-15 place-items-center rounded-full bg-[#25D366] text-slate-950 shadow-[0_15px_35px_-10px_rgb(37_211_102/0.8)] transition hover:scale-110"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" aria-hidden="true" />
-      <WhatsAppIcon className="relative size-8" />
+      <WhatsAppIcon className="relative size-8 shrink-0" />
     </a>
   )
 }
