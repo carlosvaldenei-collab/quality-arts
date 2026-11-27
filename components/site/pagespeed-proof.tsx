@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const metricItems = [
   { id: 'performance', label: 'Desempenho', valueMobile: 98, valueDesktop: 100 },
-  { id: 'accessibility', label: 'Acessibilidade', valueMobile: 97, valueDesktop: 97 },
+  { id: 'accessibility', label: 'Acessibilidade', valueMobile: 100, valueDesktop: 100 },
   { id: 'best-practices', label: 'Práticas recomendadas', valueMobile: 100, valueDesktop: 100 },
   { id: 'seo', label: 'SEO', valueMobile: 100, valueDesktop: 100 },
 ];
