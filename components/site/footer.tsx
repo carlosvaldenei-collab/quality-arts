@@ -54,7 +54,7 @@ export function Footer() {
             próximo e individualizado.
           </p>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-royal">
-            <MapPin className="size-4 text-electric" aria-hidden="true" />
+            <MapPin className="size-4 text-royal" aria-hidden="true" />
             Santa Rita do Sapucaí - MG
           </p>
         </div>
@@ -64,7 +64,7 @@ export function Footer() {
           <ul className="mt-4 grid gap-2.5">
             {NAV_LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="text-sm text-muted-foreground transition hover:text-electric">
+                <a href={l.href} className="text-sm text-muted-foreground transition hover:text-royal">
                   {l.label}
                 </a>
               </li>
@@ -82,7 +82,7 @@ export function Footer() {
                   target="_blank"
                   suppressHydrationWarning
                   rel="noopener noreferrer"
-                  className="text-sm text-muted-foreground transition hover:text-electric"
+                  className="text-sm text-muted-foreground transition hover:text-royal"
                 >
                   {p.name}
                 </a>
@@ -102,7 +102,7 @@ export function Footer() {
                   suppressHydrationWarning
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className={`grid size-12 place-items-center rounded-full text-white transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-electric ${s.className}`}
+                  className={`grid size-12 place-items-center rounded-full text-white transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal ${s.className}`}
                 >
                   <s.icon className="size-6" aria-hidden="true" />
                 </a>
@@ -114,7 +114,7 @@ export function Footer() {
             target="_blank"
             suppressHydrationWarning
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#1ebe5b]"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-[#1ebe5b]"
           >
             <WhatsAppIcon className="size-4" />
             Fale no WhatsApp
@@ -138,7 +138,7 @@ export function WhatsAppFloat() {
       suppressHydrationWarning
       rel="noopener noreferrer"
       aria-label="Falar com a Quality Arts no WhatsApp"
-      className="group fixed right-5 bottom-5 z-50 grid size-15 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_15px_35px_-10px_rgb(37_211_102/0.8)] transition hover:scale-110"
+      className="group fixed right-5 bottom-5 z-50 grid size-15 place-items-center rounded-full bg-[#25D366] text-slate-950 shadow-[0_15px_35px_-10px_rgb(37_211_102/0.8)] transition hover:scale-110"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-pulse-ring" aria-hidden="true" />
       <WhatsAppIcon className="relative size-8" />
