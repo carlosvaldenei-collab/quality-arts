@@ -20,7 +20,6 @@ export default function Page() {
       <Navbar />
       <main>
         <Hero />
-        app/page.tsx
         <SolutionSimulator />
         <About />
         <Services />
