@@ -64,7 +64,7 @@ export function Hero() {
               <div>
                 <dt className="text-sm text-muted-foreground">Clientes no ar</dt>
                 <dd className="font-heading text-3xl font-extrabold text-electric">
-                  <Counter to={7} suffix="+" />
+                  <Counter to={10} suffix="+" />
                 </dd>
               </div>
               <div>
