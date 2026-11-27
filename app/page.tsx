@@ -1,9 +1,35 @@
 import { Navbar } from '@/components/site/navbar'
 import { Hero } from '@/components/site/hero'
+// app/page.tsx
+import { Hero } from '@/components/site/hero';
+import { Services } from '@/components/site/services';
+import { Portfolio } from '@/components/site/portfolio';
+// ... outras importações ...
+
+// Adiciona esta linha aqui:
+import { PageSpeedProof } from '@/components/site/pagespeed-proof';
+
+// ... Resto do ficheiro ...
 import { SolutionSimulator } from '@/components/site/solution-simulator'
 import { About } from '@/components/site/about'
 import { Services } from '@/components/site/services'
 import { Portfolio } from '@/components/site/portfolio'
+// app/page.tsx
+export default function Home() {
+  return (
+    <main className="flex flex-col min-h-screen">
+      <Hero />
+      <Services />
+      <Portfolio />
+
+      {/* Cola o componente aqui, entre o portfólio e o footer/cta */}
+      <PageSpeedProof />
+
+      <ContactForm /> {/* Ou componente de agendamento */}
+      <Footer />
+    </main>
+  );
+}
 import { Process } from '@/components/site/process'
 import { Booking } from '@/components/site/booking'
 import { Faq, FinalCta } from '@/components/site/faq'
