@@ -94,7 +94,7 @@ export function PageSpeedProof() {
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-500">
-          Resultados baseados na auditoria realizada para a URL principal.
+          Resultados baseados na auditoria realizada para a URL principal em 27/11/2026.
         </p>
       </div>
     </section>
