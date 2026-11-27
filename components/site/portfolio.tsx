@@ -45,7 +45,7 @@ export function Portfolio() {
                 <span
                   className={cn(
                     'grid min-w-5 place-items-center rounded-full px-1.5 text-xs',
-                    active ? 'bg-white/25' : 'bg-white text-electric',
+                    active ? 'bg-white/25' : 'bg-white text-royal',
                   )}
                 >
                   {count}
@@ -95,7 +95,7 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
       </div>
       <div className="flex flex-1 flex-col p-6">
         <div className="flex flex-wrap gap-2">
-          <span className="rounded-full bg-electric/10 px-2.5 py-1 text-xs font-semibold text-electric">{item.category}</span>
+          <span className="rounded-full bg-electric/10 px-2.5 py-1 text-xs font-semibold text-royal">{item.category}</span>
           <span className="rounded-full bg-gold/15 px-2.5 py-1 text-xs font-semibold text-[#92400e]">{item.segment}</span>
         </div>
         <h3 className="mt-4 text-xl font-extrabold text-ink">{item.name}</h3>
