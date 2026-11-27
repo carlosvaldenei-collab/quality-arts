@@ -45,9 +45,9 @@ export function PageSpeedProof() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Coluna Celular */}
           <div className="rounded-3xl bg-white p-8 border border-slate-100 shadow-lg shadow-slate-100/50">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between gap-3 mb-8">
               <h3 className="font-heading text-2xl font-bold text-slate-900">Dispositivos Móveis (Celular)</h3>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700 border border-emerald-100">
+              <span className="inline-flex shrink-0 whitespace-nowrap items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-xs font-medium text-emerald-700 border border-emerald-100">
                 <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
                 Navegação Agêntica: 2/2
               </span>
@@ -55,8 +55,8 @@ export function PageSpeedProof() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {metricItems.map((item) => (
                 <div key={item.id + '-mobile'} className="flex flex-col items-center text-center">
-                  <div className={`relative flex h-24 w-24 items-center justify-center rounded-full border-[10px] ${getScoreColor(item.valueMobile)}`}>
-                    <span className="font-heading text-5xl font-extrabold">{item.valueMobile}</span>
+                  <div className={`relative flex h-20 w-20 items-center justify-center rounded-full border-[6px] ${getScoreColor(item.valueMobile)}`}>
+                    <span className="font-heading text-2xl font-extrabold">{item.valueMobile}</span>
                   </div>
                   <p className="mt-4 text-sm font-medium text-slate-700 leading-tight">{item.label}</p>
                 </div>
@@ -66,9 +66,9 @@ export function PageSpeedProof() {
 
           {/* Coluna Computador */}
           <div className="rounded-3xl bg-white p-8 border border-slate-100 shadow-lg shadow-slate-100/50">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between gap-3 mb-8">
               <h3 className="font-heading text-2xl font-bold text-slate-900">Computador (Desktop)</h3>
-               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-700 border border-emerald-100">
+              <span className="inline-flex shrink-0 whitespace-nowrap items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-xs font-medium text-emerald-700 border border-emerald-100">
                 <span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
                 Navegação Agêntica: 2/2
               </span>
@@ -76,8 +76,8 @@ export function PageSpeedProof() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
               {metricItems.map((item) => (
                 <div key={item.id + '-desktop'} className="flex flex-col items-center text-center">
-                  <div className={`relative flex h-24 w-24 items-center justify-center rounded-full border-[10px] ${getScoreColor(item.valueDesktop)}`}>
-                    <span className="font-heading text-5xl font-extrabold">{item.valueDesktop}</span>
+                  <div className={`relative flex h-20 w-20 items-center justify-center rounded-full border-[6px] ${getScoreColor(item.valueDesktop)}`}>
+                    <span className="font-heading text-2xl font-extrabold">{item.valueDesktop}</span>
                   </div>
                   <p className="mt-4 text-sm font-medium text-slate-700 leading-tight">{item.label}</p>
                 </div>
@@ -85,8 +85,8 @@ export function PageSpeedProof() {
             </div>
           </div>
         </div>
-         <p className="mt-10 text-center text-xs text-slate-500">Resultados baseados na auditoria realizada em 26/11/2026 para a URL principal.</p>
+        <p className="mt-10 text-center text-xs text-slate-500">Resultados baseados na auditoria realizada em 26/11/2026 para a URL principal.</p>
       </div>
     </section>
   );
-}
+} 
