@@ -12,10 +12,10 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.qualityarts.com.br'),
   title: 'Quality Arts Soluções Web | Agência Digital em Santa Rita do Sapucaí - MG',
   description:
     'Criação de sites institucionais de alta performance, catálogos digitais interativos, domínios, hospedagem, SSL e rastreamento com Google Tag Manager. Atendimento próximo em Santa Rita do Sapucaí - MG.',
-  generator: 'v0.app',
   keywords: [
     'agência digital',
     'criação de sites',
@@ -25,11 +25,36 @@ export const metadata: Metadata = {
     'Google Tag Manager',
     'SEO',
   ],
+  authors: [{ name: 'Quality Arts Soluções Web', url: 'https://www.qualityarts.com.br' }],
+  creator: 'Quality Arts Soluções Web',
+  alternates: {
+    canonical: 'https://www.qualityarts.com.br',
+  },
   openGraph: {
     title: 'Quality Arts Soluções Web',
     description: 'Transformamos a presença digital da sua empresa em resultados sólidos e mensuráveis.',
+    url: 'https://www.qualityarts.com.br',
+    siteName: 'Quality Arts Soluções Web',
     locale: 'pt_BR',
     type: 'website',
+    images: [
+      {
+        url: '/icon.png',
+        width: 512,
+        height: 512,
+        alt: 'Quality Arts Soluções Web',
+      },
+    ],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -43,9 +68,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Quality Arts Soluções Web',
+    url: 'https://www.qualityarts.com.br',
+    telephone: '+55-35-99950-3338',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Santa Rita do Sapucaí',
+      addressRegion: 'MG',
+      addressCountry: 'BR',
+    },
+    areaServed: 'BR',
+    knowsAbout: [
+      'Criação de Sites Institucionais',
+      'Catálogos Digitais Interativos',
+      'Gestão de Domínios e Hospedagem',
+      'Certificado SSL e SEO',
+      'Google Tag Manager',
+    ],
+  }
+
   return (
     <html lang="pt-BR" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
